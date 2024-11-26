@@ -36,3 +36,25 @@ Recommendation engine software for HustleSasa's e-commerce platform.
     ```
     fastapi dev main.py
 
+## Project Structure
+    ```
+    .
+    ├── app
+    │   ├── __init__.py
+    │   ├── main.py          # Entry point of the application
+    │   ├── test_main.py     # Unit tests
+    │   ├── models.py        # Pydantic models
+    ├── requirements.txt     # Project dependencies
+    ├── README.md            # Project documentation
+    └── .gitignore           # Files and directories to ignore in Git
+
+## Usage
+
+Once the application is running, navigate to the following URLs:
+
+
+## Testing
+    ```
+    pytest
+
+
