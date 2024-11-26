@@ -46,12 +46,4 @@ async def test_buyer_recommendations():
         recommendations = set([product['id'] for product in json_response])
 
         assert set(cart_1_product_ids).issubset(recommendations)
-
-
-
-
-
-    # asyncio.create_task(mock_purchase(user,data.product_ids))
-    # asyncio.create_task(mock_follow(data.user_id,data.following_id))
-    # asyncio.create_task(mock_rate(user,product))
     

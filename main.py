@@ -26,23 +26,29 @@ app = FastAPI(lifespan=lifespan)
 def buyer_recommendations(buyer_id:str):
     buyer = get_document('users',buyer_id)
     is_following = buyer.get('is_following')
-    is_following_purchases = [ get_document('users',user_id).get('purchases') for user_id in is_following ]
-    is_following_purchases = [product_ids for product_ids in is_following_purchases]
+    is_following_purchases = [ 
+        get_document('products',product_id)
+        for user_id in is_following
+        for purchases in get_document('users',user_id).get('purchases')
+        for product_id in purchases
+    ]
+    
 
     ratings_dict = {}
     recommendations = []
-    print(is_following_purchases)
-    for product_id in is_following_purchases:
-        product = get_document('products',product_id)
+    for product in is_following_purchases:
+        # print(product)
         product['rating'] = round(sum(product['ratings'])/len(product['ratings']) if len(product['ratings']) > 0 else 0)
-        ratings_dict[product_id] = product['rating']
+        ratings_dict[product.get('id')] = (product['rating'],product)
         recommendations.append(product)
         
 
 
-    is_following_purchases = sorted(is_following_purchases, key=lambda x: (-ratings_dict[x], x))
-    is_following_purchases = list(dict.fromkeys(is_following_purchases))
-    return is_following_purchases
+    ratings_dict = dict(sorted(ratings_dict.items(), key=lambda item: -item[1][0]))
+    print(ratings_dict)
+    # is_following_purchases = sorted(is_following_purchases, key=lambda x: (-ratings_dict[x], x))
+    # is_following_purchases = list(dict.fromkeys(is_following_purchases))
+    return [ratings_dict[key][1] for key in ratings_dict.keys()]
 
 
 @app.get("/products/{product_id}/recommendations")
