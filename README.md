@@ -62,6 +62,15 @@ Once the application is running, navigate to the following URLs:
     pytest
 
 
-![fig1](services-architecture.jpg)
+## Services Architecture
+![Services Architecture](services-architecture.jpg)
+
+## Recommendation Structures
+
+1. 
+![Product Recommendations](services-architecture.jpg)
+
+2. 
+![Social Recommendations](services-architecture.jpg)
 
 
