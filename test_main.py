@@ -1,8 +1,8 @@
 from fastapi.testclient import TestClient
 import pytest
 
-from setup import mock_follow, mock_purchase
 
+from events import mock_follow, mock_purchase
 from main import app
 
 client = TestClient(app)
