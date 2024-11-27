@@ -48,7 +48,9 @@ Recommendation engine software for HustleSasa's e-commerce platform.
     ├── graph_repository.py     # Neo4j graph interface
     ├── routing.py              # rest routes
     ├── setup.py                # startup and shutdown logic
+    ├── events.py               # mocks core api signals
     ├── requirements.txt        # Project dependencies
+    ├── images                  # Project documentation images
     ├── README.md               # Project documentation
     └── .gitignore              # Files and directories to ignore in Git
 
@@ -63,14 +65,14 @@ Once the application is running, navigate to the following URLs:
 
 
 ## Services Architecture
-![Services Architecture](services-architecture.jpg)
+![Services Architecture](images/services-architecture.jpg)
 
 ## Recommendation Structures
 
 1. Product Recommendations 
-![Product Recommendations](product-recommendations.png)
+![Product Recommendations](images/product-recommendations.png)
 
 2. Social Recommendations 
-![Social Recommendations](social-recommendations.png)
+![Social Recommendations](images/social-recommendations.png)
 
 
