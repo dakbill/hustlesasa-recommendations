@@ -6,7 +6,8 @@ import faker_commerce
 from fastapi.encoders import jsonable_encoder
 
 from models import Product, User
-from utils import drop_db, summarize, write_document_to_graph, write_relationship_to_graph
+from graph_repository import drop_db, write_document_to_graph, write_relationship_to_graph
+from utils import summarize
 
 INVENTORY_SIZE=1000
 USER_BASE=100
@@ -64,7 +65,7 @@ async def mock_purchase(user_id=None, product_ids=[]):
     cart_size = random.randint(1,10) if is_system_sale else len(product_ids)
     for i in range(cart_size):
         product_id = random.randint(1,INVENTORY_SIZE) if is_system_sale else product_ids[i]
-        write_relationship_to_graph('Product','User','BOUGHT_BY',{'id1':product_id,'id2':user_id})
+        write_relationship_to_graph('User','Product','HAS_BOUGHT',{'id1':user_id,'id2':product_id})
         await mock_rate(user_id,product_id)
         if is_system_sale:
             product_ids.append(product_id)

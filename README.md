@@ -14,6 +14,7 @@ Recommendation engine software for HustleSasa's e-commerce platform.
 
 - **Python**: Make sure you have Python 3.7 or higher installed.
 - **Pip**: Ensure `pip` is installed for dependency management.
+- **Docker**: Ensure `docker` and `docker compose` is installed for container management.
 - Optional: `virtualenv` for isolated environments.
 
 ## Installation
@@ -34,19 +35,22 @@ Recommendation engine software for HustleSasa's e-commerce platform.
 
 4. Run the application:
     ```
+    docker compose up -d --force-recreate
     fastapi dev main.py
 
 ## Project Structure
     ```
     .
     ├── app
-    │   ├── __init__.py
-    │   ├── main.py          # Entry point of the application
-    │   ├── test_main.py     # Unit tests
-    │   ├── models.py        # Pydantic models
-    ├── requirements.txt     # Project dependencies
-    ├── README.md            # Project documentation
-    └── .gitignore           # Files and directories to ignore in Git
+    ├── main.py                 # Entry point of the application
+    ├── test_main.py            # Unit tests
+    ├── models.py               # Pydantic models
+    ├── graph_repository.py     # Neo4j graph interface
+    ├── routing.py              # rest routes
+    ├── setup.py                # startup and shutdown logic
+    ├── requirements.txt        # Project dependencies
+    ├── README.md               # Project documentation
+    └── .gitignore              # Files and directories to ignore in Git
 
 ## Usage
 
@@ -56,5 +60,9 @@ Once the application is running, navigate to the following URLs:
 ## Testing
     ```
     pytest
+
+
+## Services Architecture
+    ![Services Architecture](services-architecture.png)
 
 

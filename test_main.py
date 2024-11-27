@@ -22,8 +22,14 @@ async def test_product_recommendations():
         response = client.get(f"/products/{product_id}/recommendations")
         assert response.status_code == 200
 
-        recommendations = set([product['id'] for product in response.json().get('also_bought')])
-        assert set(cart_1_product_ids).issubset(recommendations) and set(cart_2_product_ids).issubset(recommendations)
+        a = cart_1_product_ids.copy()
+        a.remove(product_id)
+
+        b = cart_2_product_ids.copy()
+        b.remove(product_id)
+
+        recommendations = set([product['id'] for product in response.json()])
+        assert set(a).issubset(recommendations) and set(b).issubset(recommendations)
 
 
 @pytest.mark.anyio
@@ -34,15 +40,14 @@ async def test_buyer_recommendations():
 
         await mock_follow(user_2_id,user_1_id)
 
-        user_1_id
         cart_1_product_ids = [1,2,3,4,5]
         await mock_purchase(user_1_id,cart_1_product_ids)
 
         response = client.get(f"/buyers/{user_2_id}/recommendations")
         assert response.status_code == 200
 
-        json_response = response.json()
-        recommendations = set([product['id'] for product in json_response])
+        recommendations = set([product['id'] for product in response.json()])
 
-        assert set(cart_1_product_ids).issubset(recommendations)
+        a = cart_1_product_ids.copy()
+        assert set(a).issubset(recommendations)
     

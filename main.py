@@ -1,4 +1,3 @@
-from collections import Counter
 from statistics import mode
 from fastapi import FastAPI
 from fastapi.concurrency import asynccontextmanager
