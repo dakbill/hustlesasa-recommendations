@@ -48,7 +48,7 @@ Recommendation engine software for HustleSasa's e-commerce platform.
     ├── graph_repository.py     # Neo4j graph interface
     ├── routing.py              # rest routes
     ├── setup.py                # startup and shutdown logic
-    ├── events.py               # mocks core api signals (follow, purchase, rating)
+    ├── core_api_mocks.py       # mocks core api signals (follow, purchase, rating)
     ├── requirements.txt        # Project dependencies
     ├── images                  # Project documentation images
     ├── README.md               # Project documentation

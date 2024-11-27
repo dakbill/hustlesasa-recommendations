@@ -5,7 +5,7 @@ from faker import Faker
 import faker_commerce
 from fastapi.encoders import jsonable_encoder
 
-from events import mock_follow, mock_purchase, mock_rate
+from core_api_mocks import mock_follow, mock_purchase, mock_rate
 from graph_repository import Neo4jClient
 from models import Product, User
 

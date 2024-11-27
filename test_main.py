@@ -2,7 +2,7 @@ from fastapi.testclient import TestClient
 import pytest
 
 
-from events import mock_follow, mock_purchase
+from core_api_mocks import mock_follow, mock_purchase
 from main import app
 
 client = TestClient(app)
@@ -28,6 +28,7 @@ async def test_product_recommendations():
         b = cart_2_product_ids.copy()
         b.remove(product_id)
 
+        
         recommendations = set([product['id'] for product in response.json()])
         assert set(a).issubset(recommendations) and set(b).issubset(recommendations)
 

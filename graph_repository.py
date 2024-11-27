@@ -134,9 +134,13 @@ class Neo4jClient:
         """
         query = "MATCH p=(a:User)-[r1:IS_FOLLOWING]->(b:User)-[r2:HAS_BOUGHT]->(c:Product) " \
                 f"WHERE a.id = {buyer_id} " \
-                "ORDER BY r2.weight DESC RETURN c"
+                "RETURN c " \
+                "ORDER BY r2.weight DESC "
         
         response = self._execute_query(query)
+        
+        print(query)
+        print(response)
         
         return [
             document['row'][0] 
@@ -150,11 +154,16 @@ class Neo4jClient:
         :param product_id: ID of the product
         :return: List of recommended products with relationship details
         """
-        query = "MATCH p=(a:Product)-[r:ALSO_BOUGHT]->(b:Product) " \
+        query = "MATCH p=(a:Product)-[r1:ALSO_BOUGHT]->(b:Product) " \
+                "OPTIONAL MATCH (b)<-[r2:HAS_RATED]-() " \
                 f"WHERE a.id = {product_id} " \
-                "ORDER BY r.weight DESC RETURN b, r"
+                "RETURN b, r1, COALESCE(AVG(r2.rating), 0) AS average_rating " \
+                "ORDER BY (r1.weight + average_rating) DESC "
         
         response = self._execute_query(query)
+
+        print(query)
+        print(response)
         
         return [
             {**document['row'][0], **document['row'][1]} 
