@@ -62,6 +62,6 @@ Once the application is running, navigate to the following URLs:
     pytest
 
 
-![fig1]("services_architecture.jpg")
+![fig1](services-architecture.jpg)
 
 
