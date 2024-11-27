@@ -48,7 +48,7 @@ Recommendation engine software for HustleSasa's e-commerce platform.
     ├── graph_repository.py     # Neo4j graph interface
     ├── routing.py              # rest routes
     ├── setup.py                # startup and shutdown logic
-    ├── events.py               # mocks core api signals
+    ├── events.py               # mocks core api signals (follow, purchase, rating)
     ├── requirements.txt        # Project dependencies
     ├── images                  # Project documentation images
     ├── README.md               # Project documentation
@@ -67,12 +67,18 @@ Once the application is running, navigate to the following URLs:
 ## Services Architecture
 ![Services Architecture](images/services-architecture.jpg)
 
-## Recommendation Structures
+## Recommendation Types
 
 1. Product Recommendations 
+
+This type of recommendations is based on products that frequently included in the same cart as the product of reference, sorted by the weight determined by the frequency of purchase and average rating.
+
 ![Product Recommendations](images/product-recommendations.png)
 
 2. Social Recommendations 
+
+This type of recommendations based on products that purchased by other buyers a user of reference follows, sorted by the weight determined by the frequency of purchase and average rating.
+
 ![Social Recommendations](images/social-recommendations.png)
 
 

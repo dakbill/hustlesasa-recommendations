@@ -59,42 +59,6 @@ class Neo4jClient:
         except httpx.HTTPError as e:
             raise RuntimeError(f"Neo4j query failed: {e}") from e
 
-    def get_buyer_recommendations(self, buyer_id: int) -> List[Dict]:
-        """
-        Get product recommendations for a specific buyer.
-        
-        :param buyer_id: ID of the buyer
-        :return: List of recommended products
-        """
-        query = "MATCH p=(a:User)-[r1:IS_FOLLOWING]->(b:User)-[r2:HAS_BOUGHT]->(c:Product) " \
-                f"WHERE a.id = {buyer_id} " \
-                "ORDER BY r2.weight DESC RETURN c"
-        
-        response = self._execute_query(query)
-        
-        return [
-            document['row'][0] 
-            for document in response.get('results', [{}])[0].get('data', [])
-        ] if response.get('results') else []
-
-    def get_product_recommendations(self, product_id: int) -> List[Dict]:
-        """
-        Get product recommendations based on a specific product.
-        
-        :param product_id: ID of the product
-        :return: List of recommended products with relationship details
-        """
-        query = "MATCH p=(a:Product)-[r:ALSO_BOUGHT]->(b:Product) " \
-                f"WHERE a.id = {product_id} " \
-                "ORDER BY r.weight DESC RETURN b, r"
-        
-        response = self._execute_query(query)
-        
-        return [
-            {**document['row'][0], **document['row'][1]} 
-            for document in response.get('results', [{}])[0].get('data', [])
-        ] if response.get('results') else []
-
     def write_document(self, collection: str, data: Dict[str, Any]) -> None:
         """
         Write or update a document in the graph database.
@@ -160,3 +124,41 @@ class Neo4jClient:
         
         return response.get('results', [{}])[0].get('data', [{}])[0] if response.get('results') else None
 
+
+    def get_buyer_recommendations(self, buyer_id: int) -> List[Dict]:
+        """
+        Get product recommendations for a specific buyer.
+        
+        :param buyer_id: ID of the buyer
+        :return: List of recommended products
+        """
+        query = "MATCH p=(a:User)-[r1:IS_FOLLOWING]->(b:User)-[r2:HAS_BOUGHT]->(c:Product) " \
+                f"WHERE a.id = {buyer_id} " \
+                "ORDER BY r2.weight DESC RETURN c"
+        
+        response = self._execute_query(query)
+        
+        return [
+            document['row'][0] 
+            for document in response.get('results', [{}])[0].get('data', [])
+        ] if response.get('results') else []
+
+    def get_product_recommendations(self, product_id: int) -> List[Dict]:
+        """
+        Get product recommendations based on a specific product.
+        
+        :param product_id: ID of the product
+        :return: List of recommended products with relationship details
+        """
+        query = "MATCH p=(a:Product)-[r:ALSO_BOUGHT]->(b:Product) " \
+                f"WHERE a.id = {product_id} " \
+                "ORDER BY r.weight DESC RETURN b, r"
+        
+        response = self._execute_query(query)
+        
+        return [
+            {**document['row'][0], **document['row'][1]} 
+            for document in response.get('results', [{}])[0].get('data', [])
+        ] if response.get('results') else []
+
+    
