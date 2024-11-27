@@ -39,6 +39,7 @@ Recommendation engine software for HustleSasa's e-commerce platform.
     fastapi dev main.py
 
 ## Project Structure
+
     ```
     .
     ├── app
@@ -53,6 +54,8 @@ Recommendation engine software for HustleSasa's e-commerce platform.
     ├── images                  # Project documentation images
     ├── README.md               # Project documentation
     └── .gitignore              # Files and directories to ignore in Git
+    ```
+
 
 ## Usage
 
@@ -62,7 +65,7 @@ Once the application is running, navigate to the following URLs:
 ## Testing
     ```
     pytest
-
+    ```
 
 ## Services Architecture
 ![Services Architecture](images/services-architecture.jpg)
