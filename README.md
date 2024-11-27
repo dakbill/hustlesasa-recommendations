@@ -67,10 +67,10 @@ Once the application is running, navigate to the following URLs:
 
 ## Recommendation Structures
 
-1. 
+1. Product Recommendations 
 ![Product Recommendations](product-recommendations.png)
 
-2. 
+2. Social Recommendations 
 ![Social Recommendations](social-recommendations.png)
 
 
