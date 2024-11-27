@@ -1,16 +1,18 @@
 services:
-  typesense:
-    image: typesense/typesense:27.1
-    container_name: typesense
-    restart: on-failure
-    ports:
-      - "8108:8108"
-    env_file:
-      - ./.env
+  neo4j:
+    image: neo4j:latest
+    container_name: neo4j
     volumes:
-      - ./typesense-data:/data
-      - ./schema:/schema # Mount schema directory to container
-    command: '--data-dir /data --api-key=hustlesasa --enable-cors'
+        - ./neo4j/logs:/logs
+        - ./neo4j/config:/config
+        - ./neo4j/data:/data
+        - ./neo4j/plugins:/plugins
+    env_file:
+        - ./.env
+    ports:
+      - "7474:7474"
+      - "7687:7687"
+    restart: always
     networks:
       - hustlesasa
 networks:
