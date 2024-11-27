@@ -63,6 +63,6 @@ Once the application is running, navigate to the following URLs:
 
 
 ## Services Architecture
-    ![Services Architecture](services-architecture.png)
+    ![Services Architecture](services-architecture.jpg)
 
 
