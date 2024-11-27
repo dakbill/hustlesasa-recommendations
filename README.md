@@ -28,19 +28,22 @@ Recommendation engine software for HustleSasa's e-commerce platform.
     ```
     python -m venv venv
     source venv/bin/activate  # On Windows: venv\Scripts\activate
+    ```
 
 3. Install dependencies:
     ```
     pip install -r requirements.txt
+    ```
 
 4. Run the application:
     ```
     docker compose up -d --force-recreate
     fastapi dev main.py
+    ```
 
 ## Project Structure
 
-    ```
+    
     .
     ├── app
     ├── main.py                 # Entry point of the application
@@ -54,7 +57,7 @@ Recommendation engine software for HustleSasa's e-commerce platform.
     ├── images                  # Project documentation images
     ├── README.md               # Project documentation
     └── .gitignore              # Files and directories to ignore in Git
-    ```
+    
 
 
 ## Usage
@@ -62,10 +65,9 @@ Recommendation engine software for HustleSasa's e-commerce platform.
 Once the application is running, navigate to the following URLs:
 
 
-## Testing
-    ```
+## Testing    
     pytest
-    ```
+    
 
 ## Services Architecture
 ![Services Architecture](images/services-architecture.jpg)
