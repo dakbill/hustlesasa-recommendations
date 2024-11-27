@@ -34,6 +34,7 @@ class Neo4jClient:
             self.client.close()
 
     def _execute_query(self, query: str, parameters: Optional[Dict[str, Any]] = None) -> Dict:
+        # print(query,parameters)
         """
         Execute a Cypher query with optional parameters.
         
@@ -132,18 +133,16 @@ class Neo4jClient:
         :param buyer_id: ID of the buyer
         :return: List of recommended products
         """
-        query = "MATCH p=(a:User)-[r1:IS_FOLLOWING]->(b:User)-[r2:HAS_BOUGHT]->(c:Product) " \
-                f"WHERE a.id = {buyer_id} " \
-                "RETURN c " \
-                "ORDER BY r2.weight DESC "
+        query = f"MATCH p=(a:User{{id: {buyer_id} }})-[r1:IS_FOLLOWING]->(b:User)-[r2:HAS_BOUGHT]->(c:Product) " \
+                "OPTIONAL MATCH (c)<-[r3:HAS_RATED]-() " \
+                "RETURN c, COALESCE(AVG(r3.rating), 0) + COALESCE(SUM(r2.weight),0) AS weight " \
+                "ORDER BY weight DESC "
         
         response = self._execute_query(query)
         
-        print(query)
-        print(response)
         
         return [
-            document['row'][0] 
+            {**(document['row'][0]),'weight':document['row'][1] }
             for document in response.get('results', [{}])[0].get('data', [])
         ] if response.get('results') else []
 
@@ -154,19 +153,16 @@ class Neo4jClient:
         :param product_id: ID of the product
         :return: List of recommended products with relationship details
         """
-        query = "MATCH p=(a:Product)-[r1:ALSO_BOUGHT]->(b:Product) " \
+        query = f"MATCH p=(a:Product{{id:{product_id}}})-[r1:ALSO_BOUGHT{{weight: r1.weight}}]->(b:Product) " \
                 "OPTIONAL MATCH (b)<-[r2:HAS_RATED]-() " \
-                f"WHERE a.id = {product_id} " \
-                "RETURN b, r1, COALESCE(AVG(r2.rating), 0) AS average_rating " \
-                "ORDER BY (r1.weight + average_rating) DESC "
+                "RETURN b, r1.weight AS weight, COALESCE(AVG(r2.rating), 0) AS average_rating " \
+                "ORDER BY (weight + average_rating) DESC "
         
         response = self._execute_query(query)
 
-        print(query)
-        print(response)
         
         return [
-            {**document['row'][0], **document['row'][1]} 
+            {**document['row'][0], 'weight':document['row'][1]} 
             for document in response.get('results', [{}])[0].get('data', [])
         ] if response.get('results') else []
 

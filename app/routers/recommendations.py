@@ -1,9 +1,8 @@
 from fastapi import APIRouter
-from graph_repository import Neo4jClient
+from app.services.graph_service import neo4j_client
 
 
 router = APIRouter()
-neo4j_client = Neo4jClient()
 
 @router.get("/buyers/{buyer_id}/recommendations")
 def buyer_recommendations(buyer_id:int):

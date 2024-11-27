@@ -1,20 +1,22 @@
 import asyncio
+from datetime import datetime
 import os
 import random
+import time
 from faker import Faker
 import faker_commerce
 from fastapi.encoders import jsonable_encoder
 
-from core_api_mocks import mock_follow, mock_purchase, mock_rate
-from graph_repository import Neo4jClient
-from models import Product, User
+from ..internal.core_api_mocks import mock_follow, mock_purchase, mock_rate
+from ..repositories.graph_repository import Neo4jClient
+from ..models.product import Product
+from ..models.user import User
 
 INVENTORY_SIZE=int(os.getenv('INVENTORY_SIZE'))
 USER_BASE=int(os.getenv('USER_BASE'))
 
-neo4j_client = Neo4jClient()
 
-def setup():
+def setup(neo4j_client):
     if "PYTEST_CURRENT_TEST" in os.environ:
         neo4j_client.drop_database()
 
@@ -41,17 +43,19 @@ def setup():
     
     asyncio.create_task(run_main())
 
-def destroy():
-    neo4j_client.drop_database()
+def destroy(neo4j_client):
+    pass
+    # neo4j_client.drop_database()
 
 # mock user actions periodically
 async def run_main():
     while "PYTEST_CURRENT_TEST" not in os.environ:
+        random.seed(round(time.time() * 1000))
         if random.randint(1, 100) % 2 == 0:
             asyncio.create_task(mock_purchase())
         elif random.randint(1, 100) % 3 == 0:
             asyncio.create_task(mock_follow())
         else:
             asyncio.create_task(mock_rate())
-        await asyncio.sleep(3)
+        await asyncio.sleep(5)
 

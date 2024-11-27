@@ -1,15 +1,14 @@
 from fastapi.testclient import TestClient
+from ...internal.core_api_mocks import mock_purchase, mock_follow
+from ...main import recommendations_app
 import pytest
 
 
-from core_api_mocks import mock_follow, mock_purchase
-from main import app
-
-client = TestClient(app)
+client = TestClient(recommendations_app)
 
 @pytest.mark.anyio
 async def test_product_recommendations():
-    with TestClient(app) as client:
+    with TestClient(recommendations_app) as client:
         user_1_id = 1
         cart_1_product_ids = [1,2,3,4]
         await mock_purchase(user_1_id,cart_1_product_ids)
@@ -35,7 +34,7 @@ async def test_product_recommendations():
 
 @pytest.mark.anyio
 async def test_buyer_recommendations():
-    with TestClient(app) as client:
+    with TestClient(recommendations_app) as client:
         user_1_id = 1
         user_2_id = 2
 

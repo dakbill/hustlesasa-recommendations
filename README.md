@@ -47,14 +47,13 @@ Recommendation engine software for HustleSasa's e-commerce platform.
     .
     ├── app
     ├── main.py                 # Entry point of the application
-    ├── test_main.py            # Unit tests
-    ├── models.py               # Pydantic models
-    ├── graph_repository.py     # Neo4j graph interface
-    ├── routing.py              # rest routes
-    ├── setup.py                # startup and shutdown logic
-    ├── core_api_mocks.py       # mocks core api signals (follow, purchase, rating)
+    ├── tests                   # Unit tests
+    ├── models                  # Pydantic models
+    ├── repositories            # Neo4j graph interface
+    ├── routers                 # rest routes
+    ├── internal.py             # startup and shutdown logic, core_api_mocks (follow, purchase, rating)
     ├── requirements.txt        # Project dependencies
-    ├── images                  # Project documentation images
+    ├── docs                    # Project documentation assets
     ├── README.md               # Project documentation
     └── .gitignore              # Files and directories to ignore in Git
     
@@ -70,7 +69,7 @@ Once the application is running, navigate to the following URLs:
     
 
 ## Services Architecture
-![Services Architecture](images/services-architecture.jpg)
+![Services Architecture](docs/images/services-architecture.png)
 
 ## Recommendation Types
 
@@ -78,12 +77,12 @@ Once the application is running, navigate to the following URLs:
 
 This type of recommendations is based on products that frequently included in the same cart as the product of reference, sorted by the weight determined by the frequency of purchase and average rating.
 
-![Product Recommendations](images/product-recommendations.png)
+![Product Recommendations](docs/images/product-recommendations.png)
 
 2. Social Recommendations 
 
 This type of recommendations based on products that purchased by other buyers a user of reference follows, sorted by the weight determined by the frequency of purchase and average rating.
 
-![Social Recommendations](images/social-recommendations.png)
+![Social Recommendations](docs/images/social-recommendations.png)
 
 
