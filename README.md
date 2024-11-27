@@ -68,9 +68,9 @@ Once the application is running, navigate to the following URLs:
 ## Recommendation Structures
 
 1. 
-![Product Recommendations](services-architecture.jpg)
+![Product Recommendations](product-recommendations.png)
 
 2. 
-![Social Recommendations](services-architecture.jpg)
+![Social Recommendations](social-recommendations.png)
 
 
